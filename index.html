@@ -710,7 +710,7 @@ editBtn.addEventListener('click', () => {
   const els = document.querySelectorAll(editableSelectors.join(','));
   els.forEach(el => {
     el.contentEditable = editing ? 'true' : 'false';
-    el.style.outline = editing ? '1px dashed rgba(204,85,0,0.5)' : '';
+    el.style.outline = editing ? '1px dashed rgba(204,85,0,0.4)' : '';
     el.style.borderRadius = editing ? '3px' : '';
     el.style.minWidth = editing ? '20px' : '';
   });
