@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abiodun Matthew Otitoloju — Developer Programmer (ANZSCO 261312)</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F5F0E8;
+    --orange: #CC5500;
+    --orange-light: #E8733A;
+    --orange-dim: rgba(204,85,0,0.12);
+    --black: #0D0D0D;
+    --dark: #141414;
+    --mid: #1E1E1E;
+    --border: rgba(245,240,232,0.12);
+    --text-muted: rgba(245,240,232,0.5);
+    --text-secondary: rgba(245,240,232,0.75);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 4rem;
+    background: rgba(13,13,13,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; }
+  .nav-logo span { color: var(--orange); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cream); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(204,85,0,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(204,85,0,0.08) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,240,232,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,240,232,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--orange-dim); border: 0.5px solid rgba(204,85,0,0.4);
+    padding: 0.4rem 1rem; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 500; color: var(--orange-light);
+    letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hero-name {
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name .accent { color: var(--orange); }
+  .hero-title {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.9rem 2rem; border-radius: 4px;
+    font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; letter-spacing: 0.02em; transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--orange); color: white; }
+  .btn-primary:hover { background: var(--orange-light); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--cream); border: 0.5px solid var(--border); }
+  .btn-ghost:hover { border-color: rgba(245,240,232,0.35); background: rgba(245,240,232,0.05); }
+  .hero-stats {
+    position: absolute; right: 4rem; bottom: 4rem;
+    display: flex; flex-direction: column; gap: 1.5rem;
+    z-index: 2;
+  }
+  .stat { text-align: right; }
+  .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.5rem; color: var(--orange); line-height: 1; }
+  .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 4rem; }
+  .section-label {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.75rem; font-weight: 500; color: var(--orange);
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .section-label::before { content: ''; flex: 0 0 32px; height: 1px; background: var(--orange); }
+  .section-title { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 3rem; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--dark); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-text p { color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem; margin-bottom: 1.25rem; }
+  .about-text p strong { color: var(--cream); font-weight: 500; }
+  .about-right { display: flex; flex-direction: column; gap: 1.5rem; }
+  .info-row { display: flex; justify-content: space-between; padding-bottom: 1rem; border-bottom: 0.5px solid var(--border); font-size: 0.9rem; }
+  .info-row span:first-child { color: var(--text-muted); }
+  .info-row span:last-child { color: var(--cream); font-weight: 400; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--black); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  .skill-card {
+    background: var(--mid); border: 0.5px solid var(--border);
+    border-radius: 8px; padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .skill-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--orange); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .skill-card:hover { border-color: rgba(204,85,0,0.4); transform: translateY(-2px); }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-cat { font-size: 0.7rem; font-weight: 500; color: var(--orange); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
+  .skill-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { background: rgba(245,240,232,0.06); border: 0.5px solid var(--border); padding: 0.25rem 0.65rem; border-radius: 3px; font-size: 0.75rem; color: var(--text-secondary); }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--dark); }
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 3rem; padding: 2.5rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta { padding-top: 0.2rem; }
+  .exp-date { font-size: 0.78rem; color: var(--text-muted); font-weight: 400; margin-bottom: 0.5rem; letter-spacing: 0.04em; }
+  .exp-company { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--orange); }
+  .exp-role { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .exp-bullets li { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; padding-left: 1.2rem; position: relative; }
+  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--orange); font-size: 0.8rem; top: 3px; }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--black); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+  .project-card {
+    background: var(--mid); border: 0.5px solid var(--border);
+    border-radius: 8px; padding: 2rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    transition: all 0.2s; position: relative; overflow: hidden;
+    text-decoration: none; color: inherit;
+  }
+  .project-card:hover { border-color: rgba(204,85,0,0.5); transform: translateY(-3px); }
+  .project-card::after {
+    content: '↗'; position: absolute; top: 1.5rem; right: 1.5rem;
+    color: var(--orange); font-size: 1.1rem; opacity: 0; transition: opacity 0.2s;
+  }
+  .project-card:hover::after { opacity: 1; }
+  .project-num { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.1em; }
+  .project-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; }
+  .project-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; flex: 1; }
+  .project-url { font-size: 0.78rem; color: var(--orange); opacity: 0.8; margin-top: 0.5rem; word-break: break-all; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+
+  /* ── EDUCATION / CERTS ── */
+  #education { background: var(--dark); }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .edu-block h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--orange); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .edu-item { padding: 1.25rem 0; border-bottom: 0.5px solid var(--border); }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-item-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: 0.3rem; }
+  .edu-item-sub { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--black);
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; padding: 8rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(204,85,0,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .contact-giant {
+    font-family: 'Syne', sans-serif; font-size: clamp(4rem, 12vw, 11rem);
+    font-weight: 800; line-height: 0.9; letter-spacing: -0.04em;
+    color: rgba(245,240,232,0.06); position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    white-space: nowrap; pointer-events: none; user-select: none;
+  }
+  .contact-links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin-top: 2.5rem; position: relative; z-index: 2; }
+  .contact-link { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; border-bottom: 0.5px solid var(--border); padding-bottom: 2px; transition: color 0.2s; }
+  .contact-link:hover { color: var(--orange); border-color: var(--orange); }
+
+  /* ── PARALLAX LAYERS ── */
+  .parallax-section { position: relative; }
+  .parallax-decor {
+    position: absolute; pointer-events: none; user-select: none;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    color: rgba(204,85,0,0.04); font-size: clamp(6rem, 18vw, 18rem);
+    line-height: 1; white-space: nowrap; letter-spacing: -0.04em;
+    will-change: transform;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 4rem; text-align: center;
+    border-top: 0.5px solid var(--border);
+    font-size: 0.8rem; color: var(--text-muted);
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    #hero { padding: 7rem 1.5rem 4rem; }
+    .about-grid, .edu-grid, .exp-item { grid-template-columns: 1fr; gap: 1.5rem; }
+    .hero-stats { display: none; }
+  }
+</style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AMO<span>.</span></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid" id="heroGrid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1 class="hero-name">
+      Abiodun<br>
+      <span class="accent">Matthew</span><br>
+      Otitoloju
+    </h1>
+    <p class="hero-title">Developer Programmer (ANZSCO 261312) with 8+ years of experience designing, developing, testing, and maintaining enterprise software applications — from Node.js & TypeScript backends to React frontends and cloud infrastructure.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="mailto:mabbey090@gmail.com" class="btn btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Years Experience</div></div>
+    <div class="stat"><div class="stat-num">9+</div><div class="stat-label">Live Projects</div></div>
+    <div class="stat"><div class="stat-num">1</div><div class="stat-label">Company</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="parallax-section">
+  <div class="parallax-decor" data-speed="0.3" style="right:-2rem; top:2rem;">ABOUT</div>
+  <div class="section-label">About me</div>
+  <div class="about-grid">
+    <div class="about-text fade-up">
+      <h2 class="section-title">Building systems<br>that <span style="color:var(--orange)">scale.</span></h2>
+      <p>Developer Programmer (ANZSCO 261312) with <strong>8+ years of experience</strong> interpreting specifications, technical designs and flow charts; building, maintaining and modifying code for software applications; constructing technical specifications from business functional models; and testing and writing technical documentation. Strong expertise in <strong>Node.js and TypeScript</strong>, with working experience in .NET (C#), PHP (Laravel), and MSSQL.</p>
+      <p>Experienced across the full software development lifecycle, including system design, backend development, database optimization, API integration, testing, deployment, and production support. Proficient in writing and maintaining program code to meet system requirements, system designs and technical specifications under quality-accredited standards.</p>
+      <p>Based in <strong>Lagos, Nigeria</strong> — proven ability to deliver reliable, business-driven solutions in fast-paced environments. Open to opportunities in New Zealand and Australia.</p>
+    </div>
+    <div class="about-right fade-up">
+      <div class="info-row"><span>Location</span><span>Lagos, Nigeria</span></div>
+      <div class="info-row"><span>Email</span><span>mabbey090@gmail.com</span></div>
+      <div class="info-row"><span>Phone</span><span>+234 807 464 0440</span></div>
+      <div class="info-row"><span>GitHub</span><span>github.com/Bmat321</span></div>
+      <div class="info-row"><span>Current Role</span><span>Developer Programmer @ BTM Limited</span></div>
+      <div class="info-row"><span>Status</span><span style="color:var(--orange)">● Open to work</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="parallax-section">
+  <div class="parallax-decor" data-speed="0.2" style="left:-1rem; bottom:0;">STACK</div>
+  <div class="section-label">Technical Skills</div>
+  <h2 class="section-title fade-up">The full<br><span style="color:var(--orange)">stack.</span></h2>
+  <div class="skills-grid fade-up">
+
+    <div class="skill-card">
+      <div class="skill-cat">Backend Core</div>
+      <div class="skill-name">Node.js & Server</div>
+      <div class="skill-tags">
+        <span class="tag">Node.js</span><span class="tag">Express.js</span><span class="tag">NestJS</span>
+        <span class="tag">TypeScript</span><span class="tag">REST APIs</span><span class="tag">GraphQL</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-cat">Backend Extended</div>
+      <div class="skill-name">Multi-Language</div>
+      <div class="skill-tags">
+        <span class="tag">C# / .NET</span><span class="tag">PHP / Laravel</span>
+        <span class="tag">Python</span><span class="tag">Rust</span><span class="tag">C++</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-cat">Frontend</div>
+      <div class="skill-name">UI & Frameworks</div>
+      <div class="skill-tags">
+        <span class="tag">React.js</span><span class="tag">Next.js</span><span class="tag">Vue.js</span>
+        <span class="tag">React Native</span><span class="tag">HTML5</span><span class="tag">CSS3</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-cat">Databases</div>
+      <div class="skill-name">Data & Storage</div>
+      <div class="skill-tags">
+        <span class="tag">PostgreSQL</span><span class="tag">MSSQL</span><span class="tag">MongoDB</span>
+        <span class="tag">Supabase</span><span class="tag">Stored Procs</span><span class="tag">Query Opt.</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-cat">Architecture</div>
+      <div class="skill-name">Design & Patterns</div>
+      <div class="skill-tags">
+        <span class="tag">Microservices</span><span class="tag">JWT / OAuth2</span>
+        <span class="tag">System Design</span><span class="tag">Secure Coding</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-cat">DevOps & Cloud</div>
+      <div class="skill-name">Infrastructure</div>
+      <div class="skill-tags">
+        <span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">GitHub Actions</span><span class="tag">AWS</span>
+        <span class="tag">Azure</span><span class="tag">CI/CD</span><span class="tag">Gitflow</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-cat">Events & Messaging</div>
+      <div class="skill-name">Real-time & Queues</div>
+      <div class="skill-tags">
+        <span class="tag">Kafka</span><span class="tag">RabbitMQ</span><span class="tag">Redis</span>
+        <span class="tag">Firebase</span><span class="tag">AI / LLM APIs</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-cat">Payment Gateways</div>
+      <div class="skill-name">Payments & Fintech</div>
+      <div class="skill-tags">
+        <span class="tag">Paystack</span><span class="tag">Payje</span><span class="tag">Flutterwave</span>
+        <span class="tag">Stripe</span>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-cat">Blockchain</div>
+      <div class="skill-name">Web3 & Crypto</div>
+      <div class="skill-tags">
+        <span class="tag">Tron Network</span><span class="tag">Ethereum</span><span class="tag">Bitcoin</span>
+        <span class="tag">Smart Contracts</span><span class="tag">Web3.js</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="parallax-section">
+  <div class="parallax-decor" data-speed="0.25" style="right:-2rem; top:4rem;">WORK</div>
+  <div class="section-label">Experience</div>
+  <h2 class="section-title fade-up">Where I've<br><span style="color:var(--orange)">shipped.</span></h2>
+  <div class="exp-list">
+
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <div class="exp-date">Jan 2018 — Present</div>
+        <div class="exp-company">BTM Limited</div>
+      </div>
+      <div>
+        <div class="exp-role">Developer Programmer (ANZSCO 261312)</div>
+        <ul class="exp-bullets">
+          <li>Interpreted specifications, technical designs and flow charts to build, maintain and modify code for enterprise software applications including HRIS, travel management, and payment platforms</li>
+          <li>Researched, consulted, analysed and evaluated system program needs for internal and customer-facing platforms, identifying technology limitations and deficiencies in existing systems</li>
+          <li>Wrote and maintained program code in Node.js and TypeScript to meet system requirements, system designs and technical specifications under quality-accredited standards</li>
+          <li>Tested, debugged, diagnosed and corrected errors and faults in application programming languages within established testing protocols, guidelines and quality standards to ensure programs perform to specification</li>
+          <li>Designed and developed scalable REST APIs and GraphQL services, improving system performance and reliability across multiple production platforms</li>
+          <li>Constructed technical specifications from business functional models, translating business requirements into robust technical architectures and database schemas</li>
+          <li>Wrote, updated and maintained technical program documentation, end-user documentation and operational procedures for development and deployment workflows</li>
+          <li>Implemented authentication and authorization systems using secure coding practices (JWT/OAuth2), ensuring application security and data protection compliance</li>
+          <li>Worked extensively with PostgreSQL, MSSQL and MongoDB, writing optimized queries, stored procedures and improving database performance through indexing and query optimization</li>
+          <li>Provided advice, guidance and expertise in developing proposals and strategies for software design activities, including technology evaluation and costings for software purchases and upgrades</li>
+          <li>Managed CI/CD pipelines using Docker, Kubernetes, GitHub Actions, AWS and Azure, automating software and infrastructure deployment to improve the software development lifecycle</li>
+          <li>Implemented microservices architecture and event-driven systems using Kafka, RabbitMQ and Redis for real-time data processing and messaging</li>
+          <li>Integrated payment gateways (Paystack, Flutterwave, Stripe) and blockchain technologies (Tron, Ethereum, Web3.js) into production financial applications</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="parallax-section">
+  <div class="parallax-decor" data-speed="0.15" style="left:-1rem; top:2rem;">BUILD</div>
+  <div class="section-label">Projects</div>
+  <h2 class="section-title fade-up">Live in<br><span style="color:var(--orange)">production.</span></h2>
+  <div class="projects-grid fade-up">
+
+    <a class="project-card" href="https://hris.btmlimited.net" target="_blank" rel="noopener">
+      <div class="project-num">01</div>
+      <div class="project-name">HRIS Platform — BTM</div>
+      <div class="project-desc">Enterprise HR system covering payroll, leave management, and appraisal modules. Built with a scalable backend architecture and comprehensive API layer for internal operations.</div>
+      <div class="project-url">hris.btmlimited.net</div>
+      <div class="project-stack">
+        <span class="tag">Node.js</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span><span class="tag">REST API</span><span class="tag">Express.js</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://hris.ghiassets.com" target="_blank" rel="noopener">
+      <div class="project-num">02</div>
+      <div class="project-name">HRIS Platform — GHI Assets</div>
+      <div class="project-desc">Separate HRIS deployment for GHI Assets, leveraging the same robust HR infrastructure with customized workflows and configurations for the client's specific requirements.</div>
+      <div class="project-url">hris.ghiassets.com</div>
+      <div class="project-stack">
+        <span class="tag">Node.js</span><span class="tag">MSSQL</span><span class="tag">React</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://btmtravel.net" target="_blank" rel="noopener">
+      <div class="project-num">03</div>
+      <div class="project-name">BTM Travel</div>
+      <div class="project-desc">Core travel management platform serving BTM's customer-facing operations. Maintained and improved for uptime, performance, and user experience over time.</div>
+      <div class="project-url">btmtravel.net</div>
+      <div class="project-stack">
+        <span class="tag">Node.js</span><span class="tag">React</span><span class="tag">PostgreSQL</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://payflow-virid.vercel.app" target="_blank" rel="noopener">
+      <div class="project-num">04</div>
+      <div class="project-name">Payflow</div>
+      <div class="project-desc">B2B payment platform with secure transaction processing and integrated payment gateway. Engineered with a focus on reliability, security, and seamless payment flows.</div>
+      <div class="project-url">payflow-virid.vercel.app</div>
+      <div class="project-stack">
+        <span class="tag">Node.js</span><span class="tag">Payment API</span><span class="tag">JWT</span><span class="tag">Supabase</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://ai-summarizer-z0ru.onrender.com" target="_blank" rel="noopener">
+      <div class="project-num">05</div>
+      <div class="project-name">AI Summarizer</div>
+      <div class="project-desc">Intelligent document and content summarization tool powered by AI. Enables users to quickly extract key insights from long-form text, articles, and documents.</div>
+      <div class="project-url">ai-summarizer-z0ru.onrender.com</div>
+      <div class="project-stack">
+        <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">AI API</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://kwdcoin.vercel.app" target="_blank" rel="noopener">
+      <div class="project-num">06</div>
+      <div class="project-name">KWD Coin</div>
+      <div class="project-desc">Cryptocurrency or token platform focused on KWD assets. Features real-time data, wallet integration, and a clean interface for coin tracking and transactions.</div>
+      <div class="project-url">kwdcoin.vercel.app</div>
+      <div class="project-stack">
+        <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Web3</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://freight-mocha.vercel.app" target="_blank" rel="noopener">
+      <div class="project-num">07</div>
+      <div class="project-name">Freight App</div>
+      <div class="project-desc">Logistics and freight management application streamlining cargo tracking, shipment scheduling, and operations management for freight businesses.</div>
+      <div class="project-url">freight-mocha.vercel.app</div>
+      <div class="project-stack">
+        <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">REST API</span>
+      </div>
+    </a>
+
+    <!-- <a class="project-card" href="https://crm.btmtravel.net" target="_blank" rel="noopener">
+      <div class="project-num">08</div>
+      <div class="project-name">BTM CRM</div>
+      <div class="project-desc">Customer relationship management system built for BTM's sales and operations teams. Manages customer data, interactions, and business pipeline within the travel ecosystem.</div>
+      <div class="project-url">crm.btmtravel.net</div>
+      <div class="project-stack">
+        <span class="tag">Node.js</span><span class="tag">React</span><span class="tag">PostgreSQL</span>
+      </div>
+    </a> -->
+
+    <a class="project-card" href="https://protocol.btmtravel.net" target="_blank" rel="noopener">
+      <div class="project-num">08</div>
+      <div class="project-name">BTM Protocol</div>
+      <div class="project-desc">Internal protocol and workflow management platform for BTM's operational teams, enforcing process standards and enabling streamlined internal communications.</div>
+      <div class="project-url">protocol.btmtravel.net</div>
+      <div class="project-stack">
+        <span class="tag">NestJS</span><span class="tag">TypeScript</span><span class="tag">PostgreSQL</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://travel-pro.btmtravel.net" target="_blank" rel="noopener">
+      <div class="project-num">9</div>
+      <div class="project-name">Travel Pro</div>
+      <div class="project-desc">Advanced travel booking and management platform offering pro-level features for agents and enterprise clients, with deep integrations into BTM's travel ecosystem.</div>
+      <div class="project-url">travel-pro.btmtravel.net</div>
+      <div class="project-stack">
+        <span class="tag">Node.js</span><span class="tag">React</span><span class="tag">Supabase</span><span class="tag">GraphQL</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Education & Certifications</div>
+  <h2 class="section-title fade-up">Always<br><span style="color:var(--orange)">learning.</span></h2>
+  <div class="edu-grid fade-up">
+    <div class="edu-block">
+      <h3>Education</h3>
+      <div class="edu-item">
+        <div class="edu-item-title">M.Sc. Sedimentology & Reservoir Geology</div>
+        <div class="edu-item-sub">2018</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-item-title">B.Sc. Geology</div>
+        <div class="edu-item-sub">2013</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-item-title">NYSC Certification</div>
+        <div class="edu-item-sub">2014</div>
+      </div>
+    </div>
+    <div class="edu-block">
+      <h3>Certifications</h3>
+      <div class="edu-item">
+        <div class="edu-item-title">Docker & Kubernetes: The Complete Practical Guide</div>
+        <div class="edu-item-sub">February 2026</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-item-title">JavaScript Programming Certificate</div>
+        <div class="edu-item-sub">2018</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label" style="justify-content:center;">Contact</div>
+  <h2 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,4rem);font-weight:800;letter-spacing:-0.03em;position:relative;z-index:2;">
+    Let's build something<br><span style="color:var(--orange)">remarkable.</span>
+  </h2>
+  <p style="color:var(--text-secondary);max-width:480px;margin-top:1.25rem;line-height:1.7;position:relative;z-index:2;">
+    Open to new opportunities, collaborations, and interesting engineering challenges. Drop a message — I typically respond within 24 hours.
+  </p>
+  <div class="contact-links">
+    <a class="contact-link" href="mailto:mabbey090@gmail.com">mabbey090@gmail.com</a>
+    <a class="contact-link" href="https://github.com/Bmat321" target="_blank">github.com/Bmat321</a>
+    <a class="contact-link" href="tel:+2348074640440">+234 807 464 0440</a>
+  </div>
+  <a href="mailto:mabbey090@gmail.com" class="btn btn-primary" style="margin-top:2.5rem;position:relative;z-index:2;">Send a Message</a>
+  <div class="contact-giant">CONTACT</div>
+</section>
+
+<footer>
+  <p>© 2026 Abiodun Matthew Otitoloju — Developer Programmer (ANZSCO 261312), Lagos, Nigeria</p>
+</footer>
+
+<style>
+  #edit-btn {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    background: var(--orange); color: white;
+    border: none; border-radius: 4px; cursor: pointer;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.8rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.75rem 1.25rem; display: flex; align-items: center; gap: 0.5rem;
+    box-shadow: 0 4px 24px rgba(204,85,0,0.35); transition: background 0.2s;
+  }
+  #edit-btn:hover { background: var(--orange-light); }
+  #edit-btn .dot { width: 7px; height: 7px; border-radius: 50%; background: white; }
+  body.edit-mode [contenteditable="true"] {
+    outline: 1px dashed rgba(204,85,0,0.5);
+    border-radius: 2px;
+    background: rgba(204,85,0,0.05);
+    min-width: 20px; display: inline-block;
+  }
+  body.edit-mode [contenteditable="true"]:focus { outline: 1px solid var(--orange); background: rgba(204,85,0,0.1); }
+  #save-toast {
+    position: fixed; bottom: 5.5rem; right: 2rem; z-index: 999;
+    background: var(--mid); border: 0.5px solid rgba(204,85,0,0.4);
+    color: var(--cream); font-family: 'Syne',sans-serif; font-size: 0.78rem;
+    padding: 0.6rem 1rem; border-radius: 4px; opacity: 0;
+    transition: opacity 0.3s; pointer-events: none;
+  }
+  #save-toast.show { opacity: 1; }
+</style>
+
+<button id="edit-btn" onclick="toggleEdit()">
+  <span class="dot" id="edit-dot"></span>
+  <span id="edit-label">Edit Mode</span>
+</button>
+<div id="save-toast">✓ Changes saved to clipboard</div>
+
+<script>
+// ── EDIT MODE ──
+const editBtn = document.createElement('button');
+editBtn.id = 'editToggle';
+editBtn.innerHTML = '✏️ Edit';
+editBtn.style.cssText = `
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+  background: #CC5500; color: white; border: none; border-radius: 6px;
+  padding: 0.7rem 1.4rem; font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.85rem; cursor: pointer; letter-spacing: 0.04em;
+  box-shadow: 0 4px 20px rgba(204,85,0,0.4); transition: all 0.2s;
+`;
+document.body.appendChild(editBtn);
+
+const saveBtn = document.createElement('button');
+saveBtn.innerHTML = '💾 Save HTML';
+saveBtn.style.cssText = `
+  position: fixed; bottom: 2rem; right: 9rem; z-index: 9999;
+  background: #1E1E1E; color: #F5F0E8; border: 0.5px solid rgba(245,240,232,0.2);
+  border-radius: 6px; padding: 0.7rem 1.4rem; font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: 0.85rem; cursor: pointer; letter-spacing: 0.04em;
+  display: none; transition: all 0.2s;
+`;
+document.body.appendChild(saveBtn);
+
+let editing = false;
+const editableSelectors = [
+  '.hero-name', '.hero-title', '.hero-tag',
+  '.about-text p', '.info-row span',
+  '.skill-name', '.skill-cat', '.tag',
+  '.exp-role', '.exp-company', '.exp-date', '.exp-bullets li',
+  '.project-name', '.project-desc', '.project-url',
+  '.edu-item-title', '.edu-item-sub',
+  '.stat-num', '.stat-label'
+];
+
+editBtn.addEventListener('click', () => {
+  editing = !editing;
+  const els = document.querySelectorAll(editableSelectors.join(','));
+  els.forEach(el => {
+    el.contentEditable = editing ? 'true' : 'false';
+    el.style.outline = editing ? '1px dashed rgba(204,85,0,0.4)' : '';
+    el.style.borderRadius = editing ? '3px' : '';
+    el.style.minWidth = editing ? '20px' : '';
+  });
+  editBtn.innerHTML = editing ? '✅ Done' : '✏️ Edit';
+  editBtn.style.background = editing ? '#1E1E1E' : '#CC5500';
+  editBtn.style.border = editing ? '0.5px solid rgba(245,240,232,0.3)' : 'none';
+  saveBtn.style.display = editing ? 'block' : 'none';
+});
+
+saveBtn.addEventListener('click', () => {
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  clone.querySelector('#editToggle')?.remove();
+  clone.querySelector('#saveBtn')?.remove();
+  const blob = new Blob(['<!DOCTYPE html>' + clone.outerHTML], { type: 'text/html' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'portfolio-edited.html'; a.click();
+});
+
+const decors = document.querySelectorAll('.parallax-decor');
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  decors.forEach(el => {
+    const speed = parseFloat(el.dataset.speed) || 0.2;
+    el.style.transform = `translateY(${sy * speed}px)`;
+  });
+});
+
+// Hero grid parallax
+const heroGrid = document.getElementById('heroGrid');
+window.addEventListener('scroll', () => {
+  heroGrid.style.transform = `translateY(${window.scrollY * 0.4}px)`;
+});
+
+// Fade-up on scroll
+const fadeEls = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.12 });
+fadeEls.forEach(el => observer.observe(el));
+
+// Edit mode
+const EDITABLE = [
+  '.hero-name', '.hero-title',
+  '.hero-tag', '.stat-num', '.stat-label',
+  '.about-text p', '.info-row span:last-child',
+  '.skill-cat', '.skill-name', '.tag',
+  '.exp-date', '.exp-company', '.exp-role', '.exp-bullets li',
+  '.project-name', '.project-desc', '.project-url',
+  '.edu-item-title', '.edu-item-sub',
+  'footer p'
+];
+
+let editMode = false;
+
+function toggleEdit() {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  document.getElementById('edit-label').textContent = editMode ? 'Exit Edit' : 'Edit Mode';
+  document.getElementById('edit-dot').style.background = editMode ? '#ffcc00' : 'white';
+
+  EDITABLE.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      el.contentEditable = editMode ? 'true' : 'false';
+    });
+  });
+
+  if (!editMode) {
+    const toast = document.getElementById('save-toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+}
+</script>
+
+</body>
+</html>
+
+
+
+
